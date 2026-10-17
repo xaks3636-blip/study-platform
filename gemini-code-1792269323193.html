@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الدراسة التعليمية - متابعة الدروس بدون تشويش</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#2563eb',
+                            600: '#1d4ed8',
+                            700: '#1e40af',
+                            900: '#0f172a',
+                            950: '#020617'
+                        },
+                        surface: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            800: '#1e293b',
+                            850: '#151f30',
+                            900: '#0f172a',
+                            950: '#0b0f19'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0b0f19;
+            color: #f1f5f9;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        .aspect-video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        .aspect-video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+<body class="bg-surface-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Header Navigation -->
+    <header class="bg-surface-900 border-b border-slate-800 sticky top-0 z-30 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand Title -->
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div class="w-10 h-10 rounded-lg bg-brand-600 flex items-center justify-center font-bold text-xl text-white shadow-lg shadow-brand-600/30">
+                        <!-- Simple Book/Study SVG Icon -->
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                            <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold tracking-wide text-white">منصة المتابعة التعليمية</h1>
+                        <p class="text-xs text-slate-400">دراسة مركزة بدون إعلانات أو تشتيت</p>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center space-x-2 space-x-reverse">
+                    <button id="btn-add-channel" class="bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 shadow-md">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        <span>إضافة مدرس/قناة</span>
+                    </button>
+                    <button id="btn-settings" class="bg-surface-800 hover:bg-slate-700 text-slate-300 p-2 rounded-lg transition-colors border border-slate-700" title="الإعدادات">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Layout -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+        <!-- Sidebar: Channel & Teacher Management -->
+        <aside class="lg:col-span-1 bg-surface-900 rounded-xl border border-slate-800 p-4 flex flex-col h-[calc(100vh-7rem)] sticky top-20">
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
+                <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400">قائمة المدرسين والمواد</h2>
+                <span id="channels-count" class="bg-surface-800 text-brand-500 font-semibold text-xs px-2 py-0.5 rounded-full border border-slate-700">0</span>
+            </div>
+
+            <!-- Search filter inside Channels -->
+            <div class="relative mb-3">
+                <input type="text" id="channel-search" placeholder="بحث عن مدرس أو مادة..." class="w-full bg-surface-950 text-xs text-slate-200 border border-slate-700 rounded-lg pr-8 pl-3 py-2 focus:outline-none focus:border-brand-500 transition-colors">
+                <svg class="w-4 h-4 text-slate-500 absolute right-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+
+            <!-- Channels List Container -->
+            <div id="channels-list" class="flex-1 overflow-y-auto space-y-2 pr-1">
+                <!-- Channels rendered dynamically -->
+            </div>
+        </aside>
+
+        <!-- Main Workspace (Video Player & Grid) -->
+        <main class="lg:col-span-3 space-y-6">
+
+            <!-- Video Player Display Container -->
+            <section id="player-section" class="bg-surface-900 rounded-xl border border-slate-800 overflow-hidden shadow-2xl">
+                <div id="video-embed-container" class="aspect-video-container bg-black flex items-center justify-center">
+                    <div id="no-video-placeholder" class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center text-slate-500">
+                        <svg class="w-16 h-16 mb-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <p class="text-base font-semibold text-slate-400">اختر درساً للبدء في المشاهدة والمتابعة</p>
+                        <p class="text-xs text-slate-600 mt-1">اضغط على أي فيديو من القائمة المتاحة بالأسفل</p>
+                    </div>
+                    <iframe id="youtube-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="hidden"></iframe>
+                </div>
+                <div class="p-4 border-t border-slate-800 bg-surface-900">
+                    <h2 id="active-video-title" class="text-base font-bold text-slate-100 line-clamp-2">لم يتم تحديد فيديو</h2>
+                    <p id="active-video-channel" class="text-xs text-brand-500 mt-1 font-medium">-</p>
+                </div>
+            </section>
+
+            <!-- Video Cards Section -->
+            <section class="space-y-4">
+                <!-- Search & Filters Header -->
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-surface-900 p-4 rounded-xl border border-slate-800">
+                    <div>
+                        <h3 id="current-view-title" class="text-sm font-bold text-slate-200">الدروس المتاحة</h3>
+                        <p id="current-view-subtitle" class="text-xs text-slate-500">جميع الفيديوهات التعليمية المسجلة</p>
+                    </div>
+                    <div class="relative w-full sm:w-72">
+                        <input type="text" id="video-search" placeholder="بحث في عناوين الدروس..." class="w-full bg-surface-950 text-xs text-slate-200 border border-slate-700 rounded-lg pr-8 pl-3 py-2 focus:outline-none focus:border-brand-500 transition-colors">
+                        <svg class="w-4 h-4 text-slate-500 absolute right-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                </div>
+
+                <!-- Videos Grid -->
+                <div id="videos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Cards will be populated here -->
+                </div>
+
+                <!-- Pagination / Load More Status -->
+                <div id="loading-spinner" class="hidden py-8 text-center">
+                    <div class="inline-block w-8 h-8 border-4 border-brand-500 border-t-transparent rounded-full animate-spin"></div>
+                    <p class="text-xs text-slate-400 mt-2">جاري جلب الفيديوهات من اليوتيوب...</p>
+                </div>
+
+                <!-- Load More Button -->
+                <div id="load-more-container" class="text-center py-4 hidden">
+                    <button id="btn-load-more" class="bg-surface-800 hover:bg-slate-700 text-brand-500 font-bold px-6 py-2.5 rounded-lg text-xs transition-colors border border-slate-700">
+                        تحميل المزيد من الفيديوهات
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal: Add Channel / Teacher -->
+    <div id="modal-add-channel" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-surface-900 border border-slate-800 rounded-xl w-full max-w-lg shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+                <h3 class="text-base font-bold text-white">إضافة قناة أو مدرس جديد</h3>
+                <button class="btn-close-modal text-slate-400 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <form id="form-add-channel" class="p-4 space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">اسم المدرس أو المادة</label>
+                    <input type="text" id="input-teacher-name" required placeholder="مثال: الأستاذ أحمد - الرياضيات" class="w-full bg-surface-950 text-sm text-slate-100 border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-brand-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">رابط القناة أو المعرف (Handle)</label>
+                    <input type="text" id="input-channel-url" required placeholder="مثال: @channelname أو https://youtube.com/@channel" class="w-full bg-surface-950 text-sm text-slate-100 border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-brand-500">
+                    <p class="text-[11px] text-slate-500 mt-1">يقبل الموقع المعرفات مثل @name، أو روابط القنوات الكاملة، أو Channel ID.</p>
+                </div>
+                <div id="add-channel-error" class="hidden p-3 bg-red-950/50 border border-red-800/80 rounded-lg text-xs text-red-300"></div>
+                <div class="flex items-center justify-end space-x-2 space-x-reverse pt-2">
+                    <button type="button" class="btn-close-modal px-4 py-2 bg-surface-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-lg transition-colors">إلغاء</button>
+                    <button type="submit" id="btn-submit-channel" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-2">
+                        <span>إضافة القناة</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Settings API Key -->
+    <div id="modal-settings" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-surface-900 border border-slate-800 rounded-xl w-full max-w-md shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+                <h3 class="text-base font-bold text-white">إعدادات النظام</h3>
+                <button class="btn-close-modal text-slate-400 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="p-4 space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">مفتاح API الخاص بـ YouTube Data API</label>
+                    <input type="text" id="input-api-key" class="w-full bg-surface-950 text-xs font-mono text-slate-100 border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-brand-500">
+                    <p class="text-[11px] text-slate-500 mt-1">يتم حفظ المفتاح محلياً في متصفحك واستخدامه للاتصال باليوتيوب.</p>
+                </div>
+                <div class="flex items-center justify-end space-x-2 space-x-reverse pt-2">
+                    <button type="button" class="btn-close-modal px-4 py-2 bg-surface-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-lg transition-colors">إلغاء</button>
+                    <button id="btn-save-settings" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold rounded-lg transition-colors">حفظ التغييرات</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Logic Script -->
+    <script>
+        // Application State Management
+        const DEFAULT_API_KEY = "AIzaSyAi-Xxn39YN3tKb0_5Z2P3qCiRAaBFF6Y8";
+        
+        let state = {
+            apiKey: localStorage.getItem('yt_study_api_key') || DEFAULT_API_KEY,
+            channels: JSON.parse(localStorage.getItem('yt_study_channels') || '[]'),
+            selectedChannelId: null, // null means "All Channels"
+            videos: [],
+            activeVideoId: localStorage.getItem('yt_study_last_video_id') || null,
+            channelSearchQuery: '',
+            videoSearchQuery: '',
+            // Pagination tracking state per playlist
+            channelPageTokens: {}, 
+            hasMore: false,
+            isLoadingMore: false
+        };
+
+        // DOM Elements
+        const elements = {
+            channelsList: document.getElementById('channels-list'),
+            channelsCount: document.getElementById('channels-count'),
+            videosGrid: document.getElementById('videos-grid'),
+            loadingSpinner: document.getElementById('loading-spinner'),
+            loadMoreContainer: document.getElementById('load-more-container'),
+            btnLoadMore: document.getElementById('btn-load-more'),
+            iframe: document.getElementById('youtube-iframe'),
+            noVideoPlaceholder: document.getElementById('no-video-placeholder'),
+            activeVideoTitle: document.getElementById('active-video-title'),
+            activeVideoChannel: document.getElementById('active-video-channel'),
+            currentViewTitle: document.getElementById('current-view-title'),
+            currentViewSubtitle: document.getElementById('current-view-subtitle'),
+            modalAddChannel: document.getElementById('modal-add-channel'),
+            modalSettings: document.getElementById('modal-settings'),
+            formAddChannel: document.getElementById('form-add-channel'),
+            inputTeacherName: document.getElementById('input-teacher-name'),
+            inputChannelUrl: document.getElementById('input-channel-url'),
+            inputApiKey: document.getElementById('input-api-key'),
+            addChannelError: document.getElementById('add-channel-error'),
+            btnSubmitChannel: document.getElementById('btn-submit-channel'),
+            channelSearch: document.getElementById('channel-search'),
+            videoSearch: document.getElementById('video-search')
+        };
+
+        // Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            elements.inputApiKey.value = state.apiKey;
+            renderChannelsList();
+            fetchAllVideos();
+
+            // Setup Event Listeners
+            document.getElementById('btn-add-channel').addEventListener('click', () => openModal(elements.modalAddChannel));
+            document.getElementById('btn-settings').addEventListener('click', () => openModal(elements.modalSettings));
+            elements.btnLoadMore.addEventListener('click', () => fetchMoreVideos());
+            
+            document.querySelectorAll('.btn-close-modal').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    closeModal(elements.modalAddChannel);
+                    closeModal(elements.modalSettings);
+                });
+            });
+
+            elements.formAddChannel.addEventListener('submit', handleAddChannel);
+            document.getElementById('btn-save-settings').addEventListener('click', handleSaveSettings);
+
+            elements.channelSearch.addEventListener('input', (e) => {
+                state.channelSearchQuery = e.target.value.toLowerCase();
+                renderChannelsList();
+            });
+
+            elements.videoSearch.addEventListener('input', (e) => {
+                state.videoSearchQuery = e.target.value.toLowerCase();
+                renderVideosGrid();
+            });
+
+            // Infinite Scroll Detection
+            window.addEventListener('scroll', () => {
+                if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+                    if (state.hasMore && !state.isLoadingMore) {
+                        fetchMoreVideos();
+                    }
+                }
+            });
+        });
+
+        // Helper Modal Control
+        function openModal(modal) {
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal(modal) {
+            modal.classList.add('hidden');
+            if (modal === elements.modalAddChannel) {
+                elements.addChannelError.classList.add('hidden');
+                elements.formAddChannel.reset();
+            }
+        }
+
+        // Save Settings
+        function handleSaveSettings() {
+            const newKey = elements.inputApiKey.value.trim();
+            if (newKey) {
+                state.apiKey = newKey;
+                localStorage.setItem('yt_study_api_key', newKey);
+                closeModal(elements.modalSettings);
+                fetchAllVideos();
+            }
+        }
+
+        // Extract Channel Handle or ID
+        function parseChannelInput(input) {
+            input = input.trim();
+            if (input.startsWith('UC') && input.length === 24) {
+                return { type: 'id', value: input };
+            }
+            // URL checking
+            if (input.includes('youtube.com/') || input.includes('youtu.be/')) {
+                if (input.includes('/channel/')) {
+                    const parts = input.split('/channel/');
+                    const id = parts[1].split('/')[0].split('?')[0];
+                    return { type: 'id', value: id };
+                }
+                if (input.includes('/@')) {
+                    const parts = input.split('/@');
+                    const handle = parts[1].split('/')[0].split('?')[0];
+                    return { type: 'handle', value: '@' + handle };
+                }
+            }
+            if (input.startsWith('@')) {
+                return { type: 'handle', value: input };
+            }
+            return { type: 'handle', value: '@' + input };
+        }
+
+        // Fetch Channel Details from API
+        async function fetchChannelDetails(parsed) {
+            const key = state.apiKey;
+            let url = '';
+
+            if (parsed.type === 'id') {
+                url = `https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,id&id=${parsed.value}&key=${key}`;
+            } else {
+                // By handle or custom URL username
+                const handleClean = parsed.value.replace('@', '');
+                url = `https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,id&forHandle=${handleClean}&key=${key}`;
+            }
+
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error?.message || 'تعذر الاتصال بـ YouTube API');
+            }
+
+            if (!data.items || data.items.length === 0) {
+                // Fallback attempt: Search API for channel if handle lookup fails
+                if (parsed.type === 'handle') {
+                    const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&q=${encodeURIComponent(parsed.value)}&key=${key}`;
+                    const searchRes = await fetch(searchUrl);
+                    const searchData = await searchRes.json();
+                    if (searchData.items && searchData.items.length > 0) {
+                        const channelId = searchData.items[0].id.channelId;
+                        return fetchChannelDetails({ type: 'id', value: channelId });
+                    }
+                }
+                throw new Error('لم يتم العثور على القناة. يرجى التأكد من معرف القناة أو الرابط المستخدم.');
+            }
+
+            const item = data.items[0];
+            const channelId = item.id;
+            // Derive Uploads Playlist ID (UC... -> UU...)
+            const uploadsPlaylistId = item.contentDetails?.relatedPlaylists?.uploads || ('UU' + channelId.substring(2));
+
+            return {
+                id: channelId,
+                title: item.snippet.title,
+                thumbnail: item.snippet.thumbnails?.default?.url || '',
+                uploadsPlaylistId: uploadsPlaylistId
+            };
+        }
+
+        // Add New Channel Handler
+        async function handleAddChannel(e) {
+            e.preventDefault();
+            elements.addChannelError.classList.add('hidden');
+            elements.btnSubmitChannel.disabled = true;
+            elements.btnSubmitChannel.innerText = 'جاري التحقق...';
+
+            const teacherName = elements.inputTeacherName.value.trim();
+            const channelRawInput = elements.inputChannelUrl.value.trim();
+
+            try {
+                const parsed = parseChannelInput(channelRawInput);
+                const channelData = await fetchChannelDetails(parsed);
+
+                // Check duplicate
+                if (state.channels.some(c => c.id === channelData.id)) {
+                    throw new Error('هذه القناة مضافة بالفعل في القائمة.');
+                }
+
+                const newChannel = {
+                    id: channelData.id,
+                    teacherName: teacherName,
+                    channelTitle: channelData.title,
+                    thumbnail: channelData.thumbnail,
+                    uploadsPlaylistId: channelData.uploadsPlaylistId
+                };
+
+                state.channels.push(newChannel);
+                localStorage.setItem('yt_study_channels', JSON.stringify(state.channels));
+
+                renderChannelsList();
+                closeModal(elements.modalAddChannel);
+                selectChannel(newChannel.id);
+
+            } catch (err) {
+                elements.addChannelError.innerText = err.message || 'حدث خطأ أثناء إضافة القناة';
+                elements.addChannelError.classList.remove('hidden');
+            } finally {
+                elements.btnSubmitChannel.disabled = false;
+                elements.btnSubmitChannel.innerText = 'إضافة القناة';
+            }
+        }
+
+        // Delete Channel
+        function deleteChannel(channelId, event) {
+            event.stopPropagation();
+            if (confirm('هل أنت تأكد من إزالة هذا المدرس والقناة من القائمة؟')) {
+                state.channels = state.channels.filter(c => c.id !== channelId);
+                localStorage.setItem('yt_study_channels', JSON.stringify(state.channels));
+                if (state.selectedChannelId === channelId) {
+                    state.selectedChannelId = null;
+                }
+                renderChannelsList();
+                fetchAllVideos();
+            }
+        }
+
+        // Render Channels Sidebar
+        function renderChannelsList() {
+            elements.channelsCount.innerText = state.channels.length;
+            elements.channelsList.innerHTML = '';
+
+            // "All Channels" Item
+            const allActive = state.selectedChannelId === null;
+            const allBtn = document.createElement('div');
+            allBtn.className = `p-3 rounded-lg cursor-pointer transition-all flex items-center justify-between ${
+                allActive ? 'bg-brand-600 text-white font-bold shadow-md' : 'bg-surface-850 hover:bg-slate-800 text-slate-300'
+            }`;
+            allBtn.innerHTML = `
+                <div class="flex items-center space-x-2 space-x-reverse">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    <span class="text-xs">جميع المواد والدروس</span>
+                </div>
+            `;
+            allBtn.onclick = () => selectChannel(null);
+            elements.channelsList.appendChild(allBtn);
+
+            // Filter Channels
+            const filtered = state.channels.filter(c => 
+                c.teacherName.toLowerCase().includes(state.channelSearchQuery) || 
+                c.channelTitle.toLowerCase().includes(state.channelSearchQuery)
+            );
+
+            filtered.forEach(channel => {
+                const isActive = state.selectedChannelId === channel.id;
+                const card = document.createElement('div');
+                card.className = `p-3 rounded-lg cursor-pointer transition-all flex items-center justify-between group ${
+                    isActive ? 'bg-brand-600 text-white shadow-md' : 'bg-surface-850 hover:bg-slate-800 text-slate-300'
+                }`;
+                
+                card.innerHTML = `
+                    <div class="flex items-center space-x-3 space-x-reverse overflow-hidden">
+                        <img src="${channel.thumbnail || 'https://via.placeholder.com/40'}" class="w-8 h-8 rounded-full object-cover border border-slate-700 shrink-0" alt="">
+                        <div class="truncate">
+                            <h4 class="text-xs font-bold truncate">${channel.teacherName}</h4>
+                            <p class="text-[10px] ${isActive ? 'text-brand-100' : 'text-slate-400'} truncate">${channel.channelTitle}</p>
+                        </div>
+                    </div>
+                    <button class="delete-btn opacity-0 group-hover:opacity-100 p-1 hover:text-red-400 transition-opacity" title="حذف القناة">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    </button>
+                `;
+
+                card.onclick = () => selectChannel(channel.id);
+                card.querySelector('.delete-btn').onclick = (e) => deleteChannel(channel.id, e);
+
+                elements.channelsList.appendChild(card);
+            });
+        }
+
+        // Channel Selection
+        function selectChannel(channelId) {
+            state.selectedChannelId = channelId;
+            renderChannelsList();
+
+            if (channelId) {
+                const ch = state.channels.find(c => c.id === channelId);
+                elements.currentViewTitle.innerText = `دروس: ${ch.teacherName}`;
+                elements.currentViewSubtitle.innerText = `قناة: ${ch.channelTitle}`;
+            } else {
+                elements.currentViewTitle.innerText = 'الدروس المتاحة';
+                elements.currentViewSubtitle.innerText = 'جميع الفيديوهات التعليمية المسجلة';
+            }
+
+            fetchAllVideos();
+        }
+
+        // Fetch Uploaded Videos Page using Page Tokens
+        async function fetchPlaylistPage(playlistId, teacherName, pageToken = '') {
+            const key = state.apiKey;
+            let videos = [];
+            let nextPageToken = null;
+
+            try {
+                let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${playlistId}&maxResults=50&key=${key}`;
+                if (pageToken) {
+                    url += `&pageToken=${pageToken}`;
+                }
+
+                let response = await fetch(url);
+                let data = await response.json();
+
+                if (data.items) {
+                    data.items.forEach(item => {
+                        if (item.snippet && item.snippet.resourceId) {
+                            videos.push({
+                                id: item.snippet.resourceId.videoId,
+                                title: item.snippet.title,
+                                thumbnail: item.snippet.thumbnails?.medium?.url || item.snippet.thumbnails?.default?.url || '',
+                                rawDate: new Date(item.snippet.publishedAt),
+                                publishedAt: new Date(item.snippet.publishedAt).toLocaleDateString('ar-EG', { year: 'numeric', month: 'short', day: 'numeric' }),
+                                teacherName: teacherName,
+                                channelTitle: item.snippet.channelTitle
+                            });
+                        }
+                    });
+                }
+                nextPageToken = data.nextPageToken || null;
+            } catch (err) {
+                console.error('Error fetching playlist videos:', err);
+            }
+
+            return { videos, nextPageToken };
+        }
+
+        // Fetch Initial Videos Batch
+        async function fetchAllVideos() {
+            elements.loadingSpinner.classList.remove('hidden');
+            elements.loadMoreContainer.classList.add('hidden');
+            elements.videosGrid.innerHTML = '';
+            
+            state.videos = [];
+            state.channelPageTokens = {};
+            state.hasMore = false;
+
+            const channelsToFetch = state.selectedChannelId 
+                ? state.channels.filter(c => c.id === state.selectedChannelId)
+                : state.channels;
+
+            if (channelsToFetch.length === 0) {
+                elements.loadingSpinner.classList.add('hidden');
+                renderVideosGrid();
+                return;
+            }
+
+            let newVideos = [];
+
+            for (const ch of channelsToFetch) {
+                const res = await fetchPlaylistPage(ch.uploadsPlaylistId, ch.teacherName);
+                newVideos = newVideos.concat(res.videos);
+                state.channelPageTokens[ch.uploadsPlaylistId] = res.nextPageToken;
+                if (res.nextPageToken) state.hasMore = true;
+            }
+
+            // Sort by Date Descending
+            newVideos.sort((a, b) => b.rawDate - a.rawDate);
+
+            state.videos = newVideos;
+            elements.loadingSpinner.classList.add('hidden');
+            
+            if (state.hasMore) {
+                elements.loadMoreContainer.classList.remove('hidden');
+            }
+
+            renderVideosGrid();
+
+            // Auto Load last active video or first video if available
+            if (state.activeVideoId) {
+                const found = state.videos.find(v => v.id === state.activeVideoId);
+                if (found) {
+                    playVideo(found.id, found.title, found.teacherName);
+                }
+            }
+        }
+
+        // Fetch Next Batch of Videos
+        async function fetchMoreVideos() {
+            if (state.isLoadingMore || !state.hasMore) return;
+
+            state.isLoadingMore = true;
+            elements.btnLoadMore.innerText = 'جاري التحميل...';
+
+            const channelsToFetch = state.selectedChannelId 
+                ? state.channels.filter(c => c.id === state.selectedChannelId)
+                : state.channels;
+
+            let newlyAdded = [];
+            let stillHasMore = false;
+
+            for (const ch of channelsToFetch) {
+                const token = state.channelPageTokens[ch.uploadsPlaylistId];
+                if (token) {
+                    const res = await fetchPlaylistPage(ch.uploadsPlaylistId, ch.teacherName, token);
+                    newlyAdded = newlyAdded.concat(res.videos);
+                    state.channelPageTokens[ch.uploadsPlaylistId] = res.nextPageToken;
+                }
+                if (state.channelPageTokens[ch.uploadsPlaylistId]) {
+                    stillHasMore = true;
+                }
+            }
+
+            state.hasMore = stillHasMore;
+
+            if (newlyAdded.length > 0) {
+                // Avoid duplicates
+                const existingIds = new Set(state.videos.map(v => v.id));
+                const filteredNew = newlyAdded.filter(v => !existingIds.has(v.id));
+
+                state.videos = state.videos.concat(filteredNew);
+                state.videos.sort((a, b) => b.rawDate - a.rawDate);
+                
+                renderVideosGrid();
+            }
+
+            state.isLoadingMore = false;
+            elements.btnLoadMore.innerText = 'تحميل المزيد من الفيديوهات';
+
+            if (!state.hasMore) {
+                elements.loadMoreContainer.classList.add('hidden');
+            }
+        }
+
+        // Render Videos Grid
+        function renderVideosGrid() {
+            elements.videosGrid.innerHTML = '';
+
+            const filteredVideos = state.videos.filter(v => 
+                v.title.toLowerCase().includes(state.videoSearchQuery)
+            );
+
+            if (filteredVideos.length === 0) {
+                elements.videosGrid.innerHTML = `
+                    <div class="col-span-full py-12 text-center bg-surface-900 border border-slate-800 rounded-xl">
+                        <svg class="w-12 h-12 mx-auto text-slate-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        <p class="text-sm font-semibold text-slate-400">لا توجد دروس أو فيديوهات لعرضها</p>
+                        <p class="text-xs text-slate-600 mt-1">تأكد من إضافة قنوات المدرسين أو تعديل كلمة البحث</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredVideos.forEach(video => {
+                const isPlaying = state.activeVideoId === video.id;
+                const card = document.createElement('div');
+                card.className = `bg-surface-900 rounded-xl overflow-hidden border ${isPlaying ? 'border-brand-500 shadow-lg shadow-brand-500/10' : 'border-slate-800 hover:border-slate-700'} transition-all cursor-pointer flex flex-col group`;
+
+                card.innerHTML = `
+                    <div class="relative aspect-video bg-surface-950 overflow-hidden">
+                        <img src="${video.thumbnail || 'https://via.placeholder.com/320x180'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" alt="">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <div class="w-10 h-10 rounded-full bg-brand-600 text-white flex items-center justify-center shadow-lg">
+                                <svg class="w-5 h-5 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-3 flex-1 flex flex-col justify-between space-y-2">
+                        <h4 class="text-xs font-bold text-slate-100 line-clamp-2 leading-relaxed group-hover:text-brand-500 transition-colors">${video.title}</h4>
+                        <div class="flex items-center justify-between text-[11px] text-slate-400 pt-2 border-t border-slate-800/60">
+                            <span class="font-medium text-brand-400 truncate max-w-[60%]">${video.teacherName}</span>
+                            <span class="text-slate-500 shrink-0">${video.publishedAt}</span>
+                        </div>
+                    </div>
+                `;
+
+                card.onclick = () => {
+                    playVideo(video.id, video.title, video.teacherName);
+                };
+
+                elements.videosGrid.appendChild(card);
+            });
+        }
+
+        // Play Selected Video inside Embedded Player
+        function playVideo(videoId, title, teacherName) {
+            state.activeVideoId = videoId;
+            localStorage.setItem('yt_study_last_video_id', videoId);
+
+            elements.noVideoPlaceholder.classList.add('hidden');
+            elements.iframe.classList.remove('hidden');
+            elements.iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+
+            elements.activeVideoTitle.innerText = title;
+            elements.activeVideoChannel.innerText = `المدرس/المادة: ${teacherName}`;
+
+            // Re-render grid to highlight active card
+            renderVideosGrid();
+
+            // Smooth Scroll to Player Header on mobile or smaller screens
+            if (window.innerWidth < 1024) {
+                document.getElementById('player-section').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
