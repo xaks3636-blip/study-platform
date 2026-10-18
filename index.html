@@ -46,7 +46,6 @@
             font-family: 'Cairo', sans-serif;
             transition: background-color 0.3s, color 0.3s;
         }
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -63,7 +62,7 @@
         }
         .aspect-video-container {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
         }
@@ -99,11 +98,14 @@
                 <!-- Actions -->
                 <div class="flex items-center space-x-2 space-x-reverse">
                     <!-- Theme Toggle Button -->
-                    <button id="btn-theme-toggle" class="p-2.5 rounded-lg bg-slate-200 dark:bg-surface-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-all">
-                        <!-- Sun Icon (Light Mode) -->
-                        <svg id="icon-sun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1..."/></svg>
-                        <!-- Moon Icon (Dark Mode) -->
-                        <svg id="icon-moon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 ..."/></svg>
+                    <button id="btn-theme-toggle" class="p-2.5 rounded-lg bg-slate-200 dark:bg-surface-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors border border-slate-300 dark:border-slate-700" title="تبديل الوضع الليلي / النهار">
+                        <svg id="icon-sun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <svg id="icon-moon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+
+                    <!-- Settings Button -->
+                    <button id="btn-settings" class="p-2.5 rounded-lg bg-slate-200 dark:bg-surface-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors border border-slate-300 dark:border-slate-700" title="الإعدادات">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                     </button>
 
                     <button id="btn-add-channel" class="bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 shadow-md">
@@ -122,13 +124,13 @@
         <aside class="lg:col-span-1 bg-white dark:bg-surface-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 flex flex-col h-[calc(100vh-7rem)] sticky top-20 shadow-sm">
             <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-200 dark:border-slate-800">
                 <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">قائمة المدرسين والمواد</h2>
-                <span id="channels-count" class="bg-slate-100 dark:bg-surface-800 text-brand-600 dark:text-brand-500 font-semibold text-xs px-2 py-0.5 rounded-full border border-slate-200 dark:bo...">0</span>
+                <span id="channels-count" class="bg-slate-100 dark:bg-surface-800 text-brand-600 dark:text-brand-500 font-semibold text-xs px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-700">0</span>
             </div>
 
             <!-- Search filter inside Channels -->
             <div class="relative mb-3">
-                <input type="text" id="channel-search" placeholder="بحث عن مدرس أو مادة..." class="w-full bg-slate-50 dark:bg-surface-950 text-xs text-slate-800 dark:text-slate-200 rounded-lg p-2.5 border border-slate-200 dark:border-slate-800">
-                <svg class="w-4 h-4 text-slate-400 dark:text-slate-500 absolute right-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M..."/></svg>
+                <input type="text" id="channel-search" placeholder="بحث عن مدرس أو مادة..." class="w-full bg-slate-50 dark:bg-surface-950 text-xs text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 rounded-lg pr-8 pl-3 py-2 focus:outline-none focus:border-brand-500 transition-colors">
+                <svg class="w-4 h-4 text-slate-400 dark:text-slate-500 absolute right-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
 
             <!-- Channels List Container -->
@@ -144,7 +146,7 @@
             <section id="player-section" class="bg-white dark:bg-surface-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xl">
                 <div id="video-embed-container" class="aspect-video-container bg-black flex items-center justify-center">
                     <div id="no-video-placeholder" class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center text-slate-500">
-                        <svg class="w-16 h-16 mb-4 text-slate-400 dark:text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M..."/></svg>
+                        <svg class="w-16 h-16 mb-4 text-slate-400 dark:text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         <p class="text-base font-semibold text-slate-600 dark:text-slate-400">اختر درساً للبدء في المشاهدة والمتابعة</p>
                         <p class="text-xs text-slate-400 dark:text-slate-600 mt-1">اضغط على أي فيديو من القائمة المتاحة بالأسفل</p>
                     </div>
@@ -157,10 +159,10 @@
             </section>
 
             <!-- Suggested Next Video Banner -->
-            <section id="next-video-suggestion" class="hidden bg-gradient-to-r from-brand-600 to-brand-700 text-white p-4 rounded-xl shadow-lg border border-brand-500 flex flex-col sm:flex-row it...">
+            <section id="next-video-suggestion" class="hidden bg-gradient-to-r from-brand-600 to-brand-700 text-white p-4 rounded-xl shadow-lg border border-brand-500 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="flex items-center space-x-3 space-x-reverse overflow-hidden">
                     <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M..."/></svg>
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
                     <div class="truncate">
                         <p class="text-[11px] text-brand-100 font-semibold uppercase tracking-wider">الدرس التالي المقترح</p>
@@ -182,16 +184,16 @@
                             <p id="current-view-subtitle" class="text-xs text-slate-500">جميع الفيديوهات التعليمية المسجلة</p>
                         </div>
                         <div class="relative w-full sm:w-72">
-                            <input type="text" id="video-search" placeholder="بحث في عناوين الدروس..." class="w-full bg-slate-50 dark:bg-surface-950 text-xs text-slate-800 dark:t...">
-                            <svg class="w-4 h-4 text-slate-400 dark:text-slate-500 absolute right-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" /></svg>
+                            <input type="text" id="video-search" placeholder="بحث في عناوين الدروس..." class="w-full bg-slate-50 dark:bg-surface-950 text-xs text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 rounded-lg pr-8 pl-3 py-2 focus:outline-none focus:border-brand-500 transition-colors">
+                            <svg class="w-4 h-4 text-slate-400 dark:text-slate-500 absolute right-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
                     </div>
 
                     <!-- Content Sub-tabs (Videos / Playlists / Shorts) -->
                     <div id="content-tabs" class="flex items-center space-x-2 space-x-reverse pt-2 border-t border-slate-100 dark:border-slate-800 text-xs font-semibold">
                         <button data-tab="videos" class="tab-btn active px-3 py-1.5 rounded-lg bg-brand-600 text-white transition-all">الفيديوهات</button>
-                        <button data-tab="playlists" class="tab-btn px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-surface-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-sla...">القوائم</button>
-                        <button data-tab="shorts" class="tab-btn px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-surface-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-...">الشورتس</button>
+                        <button data-tab="playlists" class="tab-btn px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-surface-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">قوائم التشغيل</button>
+                        <button data-tab="shorts" class="tab-btn px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-surface-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">الشورتس (Shorts)</button>
                     </div>
                 </div>
 
@@ -208,12 +210,35 @@
 
                 <!-- Load More Button -->
                 <div id="load-more-container" class="text-center py-4 hidden">
-                    <button id="btn-load-more" class="bg-white dark:bg-surface-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-brand-600 dark:text-brand-500 font-bold px-6 py-2.5 rounded-lg te...">
+                    <button id="btn-load-more" class="bg-white dark:bg-surface-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-brand-600 dark:text-brand-500 font-bold px-6 py-2.5 rounded-lg text-xs transition-colors border border-slate-200 dark:border-slate-700 shadow-sm">
                         تحميل المزيد من المحتوى
                     </button>
                 </div>
             </section>
         </main>
+    </div>
+
+    <!-- Modal: Settings / API Key -->
+    <div id="modal-settings" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-surface-900 border border-slate-200 dark:border-slate-800 rounded-xl w-full max-w-md shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <h3 class="text-base font-bold text-slate-900 dark:text-white">إعدادات المنصة</h3>
+                <button class="btn-close-modal text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <form id="form-settings" class="p-4 space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">مفتاح YouTube Data API Key</label>
+                    <input type="text" id="input-api-key" placeholder="أدخل مفتاح الـ API الخاص بك هنا..." class="w-full bg-slate-50 dark:bg-surface-950 text-sm text-slate-900 dark:text-slate-100 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-brand-500">
+                    <p class="text-[11px] text-slate-500 mt-1">يتم حفظ المفتاح بأمان داخل متصفحك الشخصي فقط.</p>
+                </div>
+                <div class="flex items-center justify-end space-x-2 space-x-reverse pt-2">
+                    <button type="button" class="btn-close-modal px-4 py-2 bg-slate-200 dark:bg-surface-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-lg transition-colors">إلغاء</button>
+                    <button type="submit" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold rounded-lg transition-colors">حفظ الإعدادات</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- Modal: Add Channel / Teacher -->
@@ -228,17 +253,17 @@
             <form id="form-add-channel" class="p-4 space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">اسم المدرس أو المادة</label>
-                    <input type="text" id="input-teacher-name" required placeholder="مثال: الأستاذ أحمد - الرياضيات" class="w-full bg-slate-50 dark:bg-surface-950 text-sm ...">
+                    <input type="text" id="input-teacher-name" required placeholder="مثال: الأستاذ أحمد - الرياضيات" class="w-full bg-slate-50 dark:bg-surface-950 text-sm text-slate-900 dark:text-slate-100 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-brand-500">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">رابط القناة أو المعرف (Handle)</label>
-                    <input type="text" id="input-channel-url" required placeholder="مثال: @channelname أو https://youtube.com/@channel" class="w-full bg-slate-50 dark:bg-surface-950 text-sm...">
+                    <input type="text" id="input-channel-url" required placeholder="مثال: @channelname أو https://youtube.com/@channel" class="w-full bg-slate-50 dark:bg-surface-950 text-sm text-slate-900 dark:text-slate-100 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-brand-500">
                     <p class="text-[11px] text-slate-500 mt-1">يقبل الموقع المعرفات مثل @name، أو روابط القنوات الكاملة، أو Channel ID.</p>
                 </div>
                 <div id="add-channel-error" class="hidden p-3 bg-red-100 dark:bg-red-950/50 border border-red-200 dark:border-red-800/80 rounded-lg text-xs text-red-600 dark:text-red-300"></div>
                 <div class="flex items-center justify-end space-x-2 space-x-reverse pt-2">
-                    <button type="button" class="btn-close-modal px-4 py-2 bg-slate-200 dark:bg-surface-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs f...">إلغاء</button>
-                    <button type="submit" id="btn-submit-channel" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold rounded-lg transition-colors flex items-center ...">
+                    <button type="button" class="btn-close-modal px-4 py-2 bg-slate-200 dark:bg-surface-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-lg transition-colors">إلغاء</button>
+                    <button type="submit" id="btn-submit-channel" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-2">
                         <span>إضافة القناة</span>
                     </button>
                 </div>
@@ -249,13 +274,11 @@
     <!-- Main Logic Script -->
     <script>
         // Application State Management
-        const DEFAULT_API_KEY = "AIzaSyAi-Xxn39YN3tKb0_5Z2P3qCiRAaBFF6Y8";
-        
         let state = {
-            apiKey: localStorage.getItem('yt_study_api_key') || DEFAULT_API_KEY,
+            apiKey: localStorage.getItem('yt_study_api_key') || '',
             channels: JSON.parse(localStorage.getItem('yt_study_channels') || '[]'),
-            selectedChannelId: null, // null means "All Channels"
-            activeTab: 'videos', // 'videos', 'playlists', 'shorts'
+            selectedChannelId: null,
+            activeTab: 'videos',
             videos: [],
             playlists: [],
             shorts: [],
@@ -282,6 +305,9 @@
             activeVideoChannel: document.getElementById('active-video-channel'),
             currentViewTitle: document.getElementById('current-view-title'),
             currentViewSubtitle: document.getElementById('current-view-subtitle'),
+            modalSettings: document.getElementById('modal-settings'),
+            formSettings: document.getElementById('form-settings'),
+            inputApiKey: document.getElementById('input-api-key'),
             modalAddChannel: document.getElementById('modal-add-channel'),
             formAddChannel: document.getElementById('form-add-channel'),
             inputTeacherName: document.getElementById('input-teacher-name'),
@@ -302,15 +328,33 @@
         window.addEventListener('DOMContentLoaded', () => {
             initTheme();
             renderChannelsList();
-            fetchAllContent();
+            
+            if (state.apiKey) {
+                elements.inputApiKey.value = state.apiKey;
+                fetchAllContent();
+            } else {
+                openModal(elements.modalSettings);
+            }
 
             // Setup Event Listeners
+            document.getElementById('btn-settings').addEventListener('click', () => openModal(elements.modalSettings));
             document.getElementById('btn-add-channel').addEventListener('click', () => openModal(elements.modalAddChannel));
             elements.btnLoadMore.addEventListener('click', () => fetchMoreContent());
             elements.btnThemeToggle.addEventListener('click', toggleTheme);
 
             document.querySelectorAll('.btn-close-modal').forEach(btn => {
-                btn.addEventListener('click', () => closeModal(elements.modalAddChannel));
+                btn.addEventListener('click', () => {
+                    closeModal(elements.modalAddChannel);
+                    closeModal(elements.modalSettings);
+                });
+            });
+
+            elements.formSettings.addEventListener('submit', (e) => {
+                e.preventDefault();
+                state.apiKey = elements.inputApiKey.value.trim();
+                localStorage.setItem('yt_study_api_key', state.apiKey);
+                closeModal(elements.modalSettings);
+                fetchAllContent();
             });
 
             elements.formAddChannel.addEventListener('submit', handleAddChannel);
@@ -340,7 +384,6 @@
                 });
             });
 
-            // Next Video Click
             elements.btnPlayNext.addEventListener('click', () => {
                 if (state.nextSuggestedVideo) {
                     playVideo(state.nextSuggestedVideo.id, state.nextSuggestedVideo.title, state.nextSuggestedVideo.teacherName);
@@ -484,7 +527,7 @@
             }`;
             allBtn.innerHTML = `
                 <div class="flex items-center space-x-2 space-x-reverse">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6..."/></svg>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                     <span class="text-xs">جميع المواد والدروس</span>
                 </div>
             `;
@@ -505,14 +548,14 @@
                 
                 card.innerHTML = `
                     <div class="flex items-center space-x-3 space-x-reverse overflow-hidden">
-                        <img src="${channel.thumbnail || 'https://via.placeholder.com/40'}" class="w-8 h-8 rounded-full object-cover border border-slate-300 dark:border-slate-700 shrink-0" alt=""/>
+                        <img src="${channel.thumbnail || 'https://via.placeholder.com/40'}" class="w-8 h-8 rounded-full object-cover border border-slate-300 dark:border-slate-700 shrink-0" alt="">
                         <div class="truncate">
                             <h4 class="text-xs font-bold truncate">${channel.teacherName}</h4>
                             <p class="text-[10px] ${isActive ? 'text-brand-100' : 'text-slate-500 dark:text-slate-400'} truncate">${channel.channelTitle}</p>
                         </div>
                     </div>
                     <button class="delete-btn opacity-0 group-hover:opacity-100 p-1 hover:text-red-400 transition-opacity" title="حذف القناة">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 ..."/></svg>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                     </button>
                 `;
 
@@ -581,7 +624,6 @@
                                 channelTitle: item.snippet.channelTitle
                             };
 
-                            // Categorize Shorts vs Normal Videos (based on #shorts tag or title)
                             if (title.toLowerCase().includes('#shorts') || title.toLowerCase().includes('#short')) {
                                 fetched.shorts.push(videoObj);
                             } else {
@@ -597,6 +639,8 @@
 
         // Fetch All Content
         async function fetchAllContent() {
+            if (!state.apiKey) return;
+
             elements.loadingSpinner.classList.remove('hidden');
             elements.loadMoreContainer.classList.add('hidden');
             elements.videosGrid.innerHTML = '';
@@ -618,14 +662,12 @@
             }
 
             for (const ch of channelsToFetch) {
-                // Fetch Playlist Page
                 const res = await fetchPlaylistPage(ch.uploadsPlaylistId, ch.teacherName);
                 state.videos = state.videos.concat(res.videos);
                 state.shorts = state.shorts.concat(res.shorts);
                 state.channelPageTokens[ch.uploadsPlaylistId] = res.nextPageToken;
                 if (res.nextPageToken) state.hasMore = true;
 
-                // Fetch Playlists if single channel selected
                 if (state.selectedChannelId) {
                     state.playlists = await fetchChannelPlaylists(ch.id);
                 }
@@ -679,18 +721,16 @@
             if (!state.hasMore) elements.loadMoreContainer.classList.add('hidden');
         }
 
-        // Smart Suggestion Logic: Finding next lecture (e.g. المحاضرة 7 -> المحاضرة 8)
+        // Smart Suggestion Logic
         function findNextLectureSuggestion(currentTitle, currentTeacher) {
             if (!currentTitle) return null;
 
-            // Extract Numbers from Title
             const matchNum = currentTitle.match(/(\d+)/);
             if (!matchNum) return null;
 
             const currentNum = parseInt(matchNum[0]);
             const nextNum = currentNum + 1;
 
-            // Search in same teacher's videos first
             const sameTeacherVideos = state.videos.filter(v => v.teacherName === currentTeacher);
             
             let foundNext = sameTeacherVideos.find(v => {
@@ -698,18 +738,17 @@
                 return numMatch && parseInt(numMatch[0]) === nextNum;
             });
 
-            // Fallback: If not found by exact number, take video directly above current in order
             if (!foundNext) {
                 const currIdx = sameTeacherVideos.findIndex(v => v.id === state.activeVideoId);
                 if (currIdx > 0) {
-                    foundNext = sameTeacherVideos[currIdx - 1]; // Previous item in array (newer)
+                    foundNext = sameTeacherVideos[currIdx - 1];
                 }
             }
 
             return foundNext || null;
         }
 
-        // Render Active Grid based on Tab
+        // Render Active Grid
         function renderCurrentGrid() {
             elements.videosGrid.innerHTML = '';
 
@@ -749,11 +788,10 @@
                 return;
             }
 
-            // Render Videos or Shorts
             filtered.forEach(video => {
                 const isPlaying = state.activeVideoId === video.id;
                 const card = document.createElement('div');
-                card.className = `bg-white dark:bg-surface-900 rounded-xl overflow-hidden border ${isPlaying ? 'border-brand-500 shadow-lg shadow-brand-500/10' : 'border-slate-200 dark:border-sla...'};
+                card.className = `bg-white dark:bg-surface-900 rounded-xl overflow-hidden border ${isPlaying ? 'border-brand-500 shadow-lg shadow-brand-500/10' : 'border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700'} transition-all cursor-pointer flex flex-col group shadow-sm`;
 
                 card.innerHTML = `
                     <div class="relative ${state.activeTab === 'shorts' ? 'aspect-[9/16] max-h-64' : 'aspect-video'} bg-slate-950 overflow-hidden">
@@ -790,7 +828,6 @@
             elements.activeVideoTitle.innerText = title;
             elements.activeVideoChannel.innerText = `المدرس/المادة: ${teacherName}`;
 
-            // Calculate Next Lecture Suggestion
             const nextSuggested = findNextLectureSuggestion(title, teacherName);
             if (nextSuggested) {
                 state.nextSuggestedVideo = nextSuggested;
